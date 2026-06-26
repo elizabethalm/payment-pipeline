@@ -1,10 +1,15 @@
+import logging
 from generator import generate_transactions
 from processor import process_transactions
+from exporter import export_results
+
+logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
 transactions = generate_transactions()
-results = process_transactions(transactions)
+logging.info(f"Generated {len(transactions)} transactions")
 
-print(f"Total transactions: {len(transactions)}")
-print(f"\nBy month:\n{results['by_month']}")
-print(f"\nBy type:\n{results['by_type']}")
-print(f"\nFailed transactions: {len(results['failed'])}")
+results = process_transactions(transactions)
+logging.info("Transactions processed")
+
+export_results(results)
+logging.info("Pipeline complete")
